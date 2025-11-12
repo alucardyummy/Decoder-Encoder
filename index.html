@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>🩸Vaelarian Encode/Decode</title>
+<link rel="icon" type="image/png" href="decoder.encoder.png">
+<style>
+@font-face {
+  font-family: 'DoctorGlitch';
+  src: url('DoctorGlitch.otf') format('opentype');
+}
+body{
+  font-family:'DoctorGlitch', sans-serif;
+  background:#111;
+  color:#eee;
+  margin:0;
+  padding:2rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:100vh;
+}
+h2{
+  font-size:3rem;
+  margin-bottom:2rem;
+  color:#e63946;
+  text-align:center;
+}
+.tabs{
+  display:flex;
+  gap:1rem;
+  margin-bottom:1rem;
+}
+.tab{
+  padding:.5rem 1rem;
+  cursor:pointer;
+  border-radius:6px;
+  background:rgba(255,255,255,0.05);
+  color:#e63946;
+}
+.tab.active{
+  background:#e63946;
+  color:#fff;
+}
+textarea{
+  width:95%;
+  max-width:800px;
+  height:6rem;
+  font-size:1.6rem;
+  padding:1.5rem;
+  border:none;
+  border-radius:10px;
+  background:#222;
+  color:#fff;
+  resize:vertical;
+}
+button{
+  margin-top:1.5rem;
+  padding:1.2rem 3rem;
+  font-size:1.4rem;
+  background:#e63946;
+  border:none;
+  border-radius:10px;
+  color:#fff;
+  cursor:pointer;
+  transition:background 0.3s;
+}
+button:hover{
+  background:#d62839;
+}
+#saida{
+  margin-top:1rem;
+  white-space:pre-wrap;
+  font-size:1.6rem;
+  background:#1a1a1a;
+  padding:1.5rem;
+  width:95%;
+  max-width:800px;
+  border-radius:10px;
+  font-family:'Arial',sans-serif;
+}
+</style>
+</head>
+<body>
+<h2>🩸Vaelarian Encode/Decode</h2>
+<div class="tabs">
+  <div class="tab active" id="tabEncode">Encode</div>
+  <div class="tab" id="tabDecode">Decode</div>
+</div>
+
+<div id="encodeSection">
+  <textarea id="inputEncode" placeholder="Type your text to encode..."></textarea><br/>
+  <button onclick="codificar()">Encode</button>
+</div>
+
+<div id="decodeSection" style="display:none">
+  <textarea id="inputDecode" placeholder="Paste your encoded text..."></textarea><br/>
+  <button onclick="decodificar()">Decode</button>
+</div>
+
+<div id="saida">(output appears here)</div>
+
+<script>
+const alfabetos = {
+  A:["অ","𐌀","ಅ","А","あ","ᐊ"], B:["ব","𐌁","ಬ","Б","び","ᐯ"], C:["চ","𐌂","ಚ","Ц","ち","ᒐ"],
+  D:["দ","𐌃","ದ","Д","だ","ᑕ"], E:["এ","𐌄","ಎ","Е","え","ᐁ"], F:["ফ","𐌅","ಫ","Ф","ふ","ᕓ"],
+  G:["গ","𐌆","ಗ","Г","が","ᑲ"], H:["হ","𐌇","ಹ","Х","ひ","ᕼ"], I:["ই","𐌉","ಇ","И","い","ᐃ"],
+  J:["জ","𐌈","ಜ","Ж","じ","ᔕ"], K:["ক","𐌊","ಕ","К","き","ᑭ"], L:["ল","𐌋","ಲ","Л","ら","ᒪ"],
+  M:["ম","𐌌","ಮ","М","ま","ᒣ"], N:["ন","𐌍","ನ","Н","な","ᓇ"], O:["ও","𐌏","ಒ","О","お","ᐅ"],
+  P:["প","𐍀","ಪ","П","ぱ","ᐸ"], Q:["কু","𐌒","ಕ್ವ","КУ","く","ᖃ"], R:["র","𐌓","ರ","Р","ら","ᕒ"],
+  S:["স","𐌔","ಸ","С","さ","ᔅ"], T:["ত","𐌕","ತ","Т","た","ᑎ"], U:["উ","𐌖","ಉ","У","う","ᐆ"],
+  V:["ভ","𐌗","ವ","В","ゔ","ᐧ"], W:["উই","𐌞","ವ್","ВВ","ゔぃ","ᐧᐤ"], X:["ক্ষ","𐌗","ಕ್ಸ","КС","くす","ᐊᔅ"],
+  Y:["য","𐌘","ಯ","Й","や","ᔦ"], Z:["জ়","𐌆","ಜ್","З","ず","ᔓ"]
+};
+
+const mapaInvertido = {};
+for(const letra in alfabetos){ alfabetos[letra].forEach(s=>mapaInvertido[s]=letra); }
+
+function codificar(){
+  const texto=document.getElementById("inputEncode").value.toUpperCase();
+  let resultado="";
+  for(const ch of texto){
+    if(alfabetos[ch]){
+      const sim=alfabetos[ch];
+      resultado+=sim[Math.floor(Math.random()*sim.length)];
+    } else resultado+=ch;
+  }
+  document.getElementById("saida").textContent=resultado;
+}
+
+function decodificar(){
+  const texto=document.getElementById("inputDecode").value;
+  let resultado=""; let i=0;
+  while(i<texto.length){
+    let encontrado=false;
+    for(let len=3; len>0; len--){
+      const trecho=texto.slice(i,i+len);
+      if(mapaInvertido[trecho]){ resultado+=mapaInvertido[trecho]; i+=len; encontrado=true; break; }
+    }
+    if(!encontrado){ resultado+=texto[i]; i++; }
+  }
+  document.getElementById("saida").textContent=resultado;
+}
+
+/* --- Tabs --- */
+const tabEncode=document.getElementById("tabEncode");
+const tabDecode=document.getElementById("tabDecode");
+const encodeSec=document.getElementById("encodeSection");
+const decodeSec=document.getElementById("decodeSection");
+
+tabEncode.addEventListener("click",()=>{
+  tabEncode.classList.add("active");
+  tabDecode.classList.remove("active");
+  encodeSec.style.display="block";
+  decodeSec.style.display="none";
+  document.getElementById("saida").textContent="(output appears here)";
+});
+tabDecode.addEventListener("click",()=>{
+  tabDecode.classList.add("active");
+  tabEncode.classList.remove("active");
+  decodeSec.style.display="block";
+  encodeSec.style.display="none";
+  document.getElementById("saida").textContent="(output appears here)";
+});
+</script>
+</body>
+</html>
