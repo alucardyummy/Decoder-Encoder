@@ -21,39 +21,44 @@ html, body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  font-family: 'DoctorGlitch', sans-serif;
+  color: white;
 }
 
+/* Camada de fundo separada (corrige bug do blur cortado) */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: url('kangback.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.bg-blur {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  backdrop-filter: blur(20px) brightness(0.4);
+  -webkit-backdrop-filter: blur(20px) brightness(0.4);
+}
+
+/* === Layout central === */
 body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url('kangback.jpg') no-repeat center center fixed;
-  background-size: cover;
-  font-family: 'DoctorGlitch', sans-serif;
-  color: white;
-  position: relative;
   min-height: 100vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-/* Blur corrigido */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: inherit;
-  background-attachment: fixed;
-  filter: blur(20px) brightness(0.4);
-  z-index: -1;
-}
-
-/* === Cartão com proporção 3:4 === */
+/* === Cartão 3:4 === */
 .container {
   aspect-ratio: 3 / 4;
   width: 90%;
   max-width: 850px;
   max-height: 90vh;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -206,6 +211,11 @@ button:hover {
 </head>
 
 <body>
+  <!-- Fundo fixo separado -->
+  <div class="bg-layer"></div>
+  <div class="bg-blur"></div>
+
+  <!-- Conteúdo -->
   <div class="container">
     <h2>🩸Vaelarian - Encode or Decode</h2>
 
@@ -282,4 +292,4 @@ tabD.onclick=()=>{
 };
 </script>
 </body>
-</html>
+  </html>
