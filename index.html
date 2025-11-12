@@ -1,27 +1,34 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>🩸Vaelarian - Codificar ou Decodificar</title>
+<title>🩸Vaelarian - Encode or Decode</title>
 <link rel="icon" type="image/png" href="decoder.encoder.png">
 
 <style>
+/* Fonte custom opcional */
 @font-face {
   font-family: 'DoctorGlitch';
   src: url('DoctorGlitch.otf') format('opentype');
 }
 
-/* === Fundo desfocado === */
-body {
+* {
   margin: 0;
   padding: 0;
-  font-family: 'DoctorGlitch', sans-serif;
+  box-sizing: border-box;
+}
+
+/* === Fundo e centralização === */
+body {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background: url('kangback.jpg') no-repeat center center/cover;
   overflow: hidden;
+  font-family: 'DoctorGlitch', sans-serif;
+  color: white;
+  position: relative;
 }
 
 body::before {
@@ -29,31 +36,37 @@ body::before {
   position: absolute;
   inset: 0;
   background: inherit;
-  filter: blur(18px) brightness(0.5);
+  filter: blur(20px) brightness(0.4);
   transform: scale(1.05);
   z-index: -2;
 }
 
 /* === Cartão translúcido central === */
 .container {
-  background: rgba(60, 0, 0, 0.25);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 0, 0, 0.1);
-  border-radius: 18px;
-  box-shadow: 0 0 35px rgba(255, 0, 0, 0.15);
+  backdrop-filter: blur(25px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
   padding: 3rem 2.5rem;
   width: 90%;
   max-width: 600px;
   text-align: center;
-  animation: fadeIn 1.2s ease;
+  box-shadow: 0 0 40px rgba(255, 0, 0, 0.1);
+  animation: fadeIn 1.2s ease forwards;
+}
+
+/* === Animação === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* === Título === */
 h2 {
-  color: rgba(255, 80, 80, 0.95);
-  font-size: 2.4rem;
-  margin-bottom: 2rem;
-  text-shadow: 0 0 10px rgba(255, 30, 30, 0.4);
+  font-size: 2.2rem;
+  color: rgba(255, 50, 50, 0.95);
+  text-shadow: 0 0 15px rgba(255, 0, 0, 0.35);
+  margin-bottom: 2.2rem;
 }
 
 /* === Tabs === */
@@ -63,23 +76,26 @@ h2 {
   gap: 1rem;
   margin-bottom: 1.8rem;
 }
+
 .tab {
-  padding: 0.7rem 1.5rem;
-  border-radius: 12px;
-  background: rgba(255, 0, 0, 0.05);
-  color: rgba(255, 80, 80, 0.4);
+  padding: 0.8rem 1.8rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.6);
   cursor: pointer;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
   transition: all 0.3s ease;
-  font-size: 1.1rem;
 }
+
 .tab:hover {
-  background: rgba(255, 0, 0, 0.15);
-  color: rgba(255, 100, 100, 0.7);
+  background: rgba(255, 255, 255, 0.15);
 }
+
 .tab.active {
   background: rgba(255, 0, 0, 0.25);
-  color: rgba(255, 150, 150, 0.95);
   box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+  color: white;
 }
 
 /* === Textarea === */
@@ -91,14 +107,14 @@ textarea {
   outline: none;
   padding: 1rem;
   resize: none;
-  font-size: 1.1rem;
+  font-size: 1rem;
   background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 150, 150, 0.85);
+  color: white;
   backdrop-filter: blur(6px);
   transition: 0.3s;
 }
 textarea::placeholder {
-  color: rgba(255, 100, 100, 0.3);
+  color: rgba(255, 255, 255, 0.4);
   font-style: italic;
 }
 textarea:focus {
@@ -109,18 +125,17 @@ textarea:focus {
 button {
   margin-top: 1.3rem;
   padding: 0.9rem 2.3rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  background: rgba(255, 0, 0, 0.1);
-  color: rgba(255, 150, 150, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
   transition: all 0.3s;
-  font-family: 'DoctorGlitch', sans-serif;
+  font-family: inherit;
 }
 button:hover {
   background: rgba(255, 0, 0, 0.25);
-  color: rgba(255, 180, 180, 0.9);
   box-shadow: 0 0 12px rgba(255, 0, 0, 0.25);
 }
 
@@ -130,41 +145,35 @@ button:hover {
   padding: 1.3rem;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 150, 150, 0.85);
+  color: white;
   white-space: pre-wrap;
-  font-size: 1.1rem;
+  font-size: 1rem;
   backdrop-filter: blur(6px);
   min-height: 3rem;
-}
-
-/* === Animação === */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 
 <body>
   <div class="container">
-    <h2>🩸 Vaelarian - Codificar ou Decodificar</h2>
+    <h2>🩸Vaelarian - Encode or Decode</h2>
 
     <div class="tabs">
-      <div class="tab active" id="tabEncode">Codificar</div>
-      <div class="tab" id="tabDecode">Decodificar</div>
+      <div class="tab active" id="tabEncode">Encode</div>
+      <div class="tab" id="tabDecode">Decode</div>
     </div>
 
     <div id="encodeSection">
-      <textarea id="inputEncode" placeholder="Digite o texto que deseja codificar..."></textarea>
-      <button onclick="codificar()">Codificar</button>
+      <textarea id="inputEncode" placeholder="Type your text to encode..."></textarea>
+      <button onclick="codificar()">Encode</button>
     </div>
 
     <div id="decodeSection" style="display:none">
-      <textarea id="inputDecode" placeholder="Cole o texto codificado..."></textarea>
-      <button onclick="decodificar()">Decodificar</button>
+      <textarea id="inputDecode" placeholder="Paste your encoded text..."></textarea>
+      <button onclick="decodificar()">Decode</button>
     </div>
 
-    <div id="saida">(a saída aparece aqui)</div>
+    <div id="saida">(output appears here)</div>
   </div>
 
 <script>
@@ -213,14 +222,14 @@ tabE.onclick=()=>{
   tabD.classList.remove("active");
   secE.style.display="block";
   secD.style.display="none";
-  document.getElementById("saida").textContent="(a saída aparece aqui)";
+  document.getElementById("saida").textContent="(output appears here)";
 };
 tabD.onclick=()=>{ 
   tabD.classList.add("active");
   tabE.classList.remove("active");
   secD.style.display="block";
   secE.style.display="none";
-  document.getElementById("saida").textContent="(a saída aparece aqui)";
+  document.getElementById("saida").textContent="(output appears here)";
 };
 </script>
 </body>
