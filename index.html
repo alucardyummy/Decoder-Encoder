@@ -9,32 +9,41 @@
   font-family: 'DoctorGlitch';
   src: url('DoctorGlitch.otf') format('opentype');
 }
+
+/* --- Body e centralização --- */
 body{
   font-family:'DoctorGlitch', sans-serif;
   background:#111;
   color:#eee;
   margin:0;
-  padding:4rem 2rem 2rem 2rem; /* mais espaço em cima */
+  padding:0;
   display:flex;
   flex-direction:column;
   align-items:center;
+  justify-content:center; /* centraliza verticalmente */
   min-height:100vh;
   filter: blur(8px);
   opacity: 0;
   animation: entrada 1s forwards;
 }
+
 @keyframes entrada {
   to {
     filter: blur(0);
     opacity: 1;
   }
 }
+
+/* --- Título e pequenos ajustes --- */
 h2{
   font-size:3rem;
   margin-bottom:2rem;
   color:#e63946;
   text-align:center;
+  margin-top:-3rem; /* puxa título um pouco pra cima */
 }
+
+/* --- Abas --- */
 .tabs{
   display:flex;
   gap:1rem;
@@ -51,6 +60,8 @@ h2{
   background:#e63946;
   color:#fff;
 }
+
+/* --- Textareas e botões --- */
 textarea{
   width:95%;
   max-width:800px;
@@ -77,6 +88,8 @@ button{
 button:hover{
   background:#d62839;
 }
+
+/* --- Saída --- */
 #saida{
   margin-top:1rem;
   white-space:pre-wrap;
@@ -92,6 +105,7 @@ button:hover{
 </head>
 <body>
 <h2>🩸Vaelarian - Encode or Decode</h2>
+
 <div class="tabs">
   <div class="tab active" id="tabEncode">Encode</div>
   <div class="tab" id="tabDecode">Decode</div>
@@ -110,6 +124,7 @@ button:hover{
 <div id="saida">(output appears here)</div>
 
 <script>
+/* --- Alfabetos e mapeamento --- */
 const alfabetos = {
   A:["অ","𐌀","ಅ","А","あ","ᐊ"], B:["ব","𐌁","ಬ","Б","び","ᐯ"], C:["চ","𐌂","ಚ","Ц","ち","ᒐ"],
   D:["দ","𐌃","ದ","Д","だ","ᑕ"], E:["এ","𐌄","ಎ","Е","え","ᐁ"], F:["ফ","𐌅","ಫ","Ф","ふ","ᕓ"],
@@ -125,6 +140,7 @@ const alfabetos = {
 const mapaInvertido = {};
 for(const letra in alfabetos){ alfabetos[letra].forEach(s=>mapaInvertido[s]=letra); }
 
+/* --- Funções Encode / Decode --- */
 function codificar(){
   const texto=document.getElementById("inputEncode").value.toUpperCase();
   let resultado="";
@@ -173,4 +189,4 @@ tabDecode.addEventListener("click",()=>{
 });
 </script>
 </body>
-  </html>
+</html>
