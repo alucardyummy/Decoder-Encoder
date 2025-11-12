@@ -14,11 +14,20 @@ body{
   background:#111;
   color:#eee;
   margin:0;
-  padding:2rem;
+  padding:4rem 2rem 2rem 2rem; /* mais espaço em cima */
   display:flex;
   flex-direction:column;
   align-items:center;
   min-height:100vh;
+  filter: blur(8px);
+  opacity: 0;
+  animation: entrada 1s forwards;
+}
+@keyframes entrada {
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
 }
 h2{
   font-size:3rem;
@@ -164,4 +173,4 @@ tabDecode.addEventListener("click",()=>{
 });
 </script>
 </body>
-</html>
+  </html>
