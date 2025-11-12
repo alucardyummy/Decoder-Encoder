@@ -1,220 +1,227 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>🩸Vaelarian - Encode or Decode</title>
+<title>🩸Vaelarian - Codificar ou Decodificar</title>
 <link rel="icon" type="image/png" href="decoder.encoder.png">
+
 <style>
 @font-face {
   font-family: 'DoctorGlitch';
   src: url('DoctorGlitch.otf') format('opentype');
 }
 
-/* --- Fundo desfocado --- */
-body{
-  font-family:'DoctorGlitch', sans-serif;
-  margin:0;
-  padding:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  min-height:100vh;
-  background:url('kangback.jpg') no-repeat center center/cover;
-  position:relative;
-  overflow:hidden;
+/* === Fundo desfocado === */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'DoctorGlitch', sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('kangback.jpg') no-repeat center center/cover;
+  overflow: hidden;
 }
 
-body::before{
-  content:'';
-  position:absolute;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:inherit;
-  filter:blur(12px);
-  z-index:-1;
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  filter: blur(18px) brightness(0.5);
+  transform: scale(1.05);
+  z-index: -2;
 }
 
-/* --- Fade suave --- */
-.fade-in{
-  opacity:0;
-  animation: fadeAppear 1.2s forwards;
+/* === Cartão translúcido central === */
+.container {
+  background: rgba(60, 0, 0, 0.25);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 0, 0, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 0 35px rgba(255, 0, 0, 0.15);
+  padding: 3rem 2.5rem;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  animation: fadeIn 1.2s ease;
 }
 
-@keyframes fadeAppear{
-  to{ opacity:1; }
+/* === Título === */
+h2 {
+  color: rgba(255, 80, 80, 0.95);
+  font-size: 2.4rem;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px rgba(255, 30, 30, 0.4);
 }
 
-/* --- Título --- */
-h2{
-  font-size:2.8rem;
-  color: rgba(230,57,70,0.9);
-  text-align:center;
-  margin-bottom:1.8rem;
-  margin-top:-2rem;
-  z-index:1;
+/* === Tabs === */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+.tab {
+  padding: 0.7rem 1.5rem;
+  border-radius: 12px;
+  background: rgba(255, 0, 0, 0.05);
+  color: rgba(255, 80, 80, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+}
+.tab:hover {
+  background: rgba(255, 0, 0, 0.15);
+  color: rgba(255, 100, 100, 0.7);
+}
+.tab.active {
+  background: rgba(255, 0, 0, 0.25);
+  color: rgba(255, 150, 150, 0.95);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
 }
 
-/* --- Abas --- */
-.tabs{
-  display:flex;
-  gap:1rem;
-  margin-bottom:1rem;
-  z-index:1;
+/* === Textarea === */
+textarea {
+  width: 100%;
+  height: 6rem;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  padding: 1rem;
+  resize: none;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 150, 150, 0.85);
+  backdrop-filter: blur(6px);
+  transition: 0.3s;
 }
-.tab{
-  padding:.6rem 1.2rem;
-  cursor:pointer;
-  border-radius:8px;
-  background: rgba(230,57,70,0.1);
-  color: rgba(230,57,70,0.25); /* mais fantasma */
-  font-size:1.35rem;
-  transition:0.3s;
+textarea::placeholder {
+  color: rgba(255, 100, 100, 0.3);
+  font-style: italic;
 }
-.tab.active{
-  background: rgba(230,57,70,0.25);
-  color: rgba(230,57,70,0.6); /* ativo mais visível, ainda sutil */
-}
-
-/* --- Textareas --- */
-textarea{
-  width:90%;
-  max-width:700px;
-  height:5.5rem;
-  font-size:1.35rem;
-  padding:1.2rem;
-  border:none;
-  border-radius:12px;
-  background: rgba(230,57,70,0.05);
-  color: rgba(230,57,70,0.6); /* texto mais fantasma */
-  resize:vertical;
-  z-index:1;
-}
-textarea::placeholder{
-  color: rgba(230,57,70,0.25); /* placeholder bem sutil */
-  font-style:italic;
+textarea:focus {
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.25);
 }
 
-/* --- Botões --- */
-button{
-  margin-top:1.2rem;
-  padding:.95rem 2.3rem;
-  font-size:1.35rem;
-  background: rgba(230,57,70,0.1);
-  border:none;
-  border-radius:10px;
-  color: rgba(230,57,70,0.25); /* texto fantasma */
-  cursor:pointer;
-  transition:0.3s;
-  z-index:1;
+/* === Botão === */
+button {
+  margin-top: 1.3rem;
+  padding: 0.9rem 2.3rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: rgba(255, 0, 0, 0.1);
+  color: rgba(255, 150, 150, 0.6);
+  transition: all 0.3s;
+  font-family: 'DoctorGlitch', sans-serif;
 }
-button:hover{
-  background: rgba(230,57,70,0.25);
-  color: rgba(230,57,70,0.6); /* hover mais visível */
+button:hover {
+  background: rgba(255, 0, 0, 0.25);
+  color: rgba(255, 180, 180, 0.9);
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.25);
 }
 
-/* --- Saída --- */
-#saida{
-  margin-top:1rem;
-  white-space:pre-wrap;
-  font-size:1.35rem;
-  background: rgba(230,57,70,0.05);
-  padding:1.4rem;
-  width:90%;
-  max-width:700px;
-  border-radius:12px;
-  color: rgba(230,57,70,0.6);
-  font-family:'Arial',sans-serif;
-  z-index:1;
+/* === Saída === */
+#saida {
+  margin-top: 1.5rem;
+  padding: 1.3rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 150, 150, 0.85);
+  white-space: pre-wrap;
+  font-size: 1.1rem;
+  backdrop-filter: blur(6px);
+  min-height: 3rem;
+}
+
+/* === Animação === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
+
 <body>
+  <div class="container">
+    <h2>🩸 Vaelarian - Codificar ou Decodificar</h2>
 
-<h2 class="fade-in">🩸Vaelarian - Encode or Decode</h2>
+    <div class="tabs">
+      <div class="tab active" id="tabEncode">Codificar</div>
+      <div class="tab" id="tabDecode">Decodificar</div>
+    </div>
 
-<div class="tabs fade-in">
-  <div class="tab active" id="tabEncode">Encode</div>
-  <div class="tab" id="tabDecode">Decode</div>
-</div>
+    <div id="encodeSection">
+      <textarea id="inputEncode" placeholder="Digite o texto que deseja codificar..."></textarea>
+      <button onclick="codificar()">Codificar</button>
+    </div>
 
-<div id="encodeSection" class="fade-in">
-  <textarea id="inputEncode" placeholder="Type your text to encode..."></textarea><br/>
-  <button onclick="codificar()">Encode</button>
-</div>
+    <div id="decodeSection" style="display:none">
+      <textarea id="inputDecode" placeholder="Cole o texto codificado..."></textarea>
+      <button onclick="decodificar()">Decodificar</button>
+    </div>
 
-<div id="decodeSection" class="fade-in" style="display:none">
-  <textarea id="inputDecode" placeholder="Paste your encoded text..."></textarea><br/>
-  <button onclick="decodificar()">Decode</button>
-</div>
-
-<div id="saida" class="fade-in">(output appears here)</div>
+    <div id="saida">(a saída aparece aqui)</div>
+  </div>
 
 <script>
-/* --- Alfabeto único --- */
+/* --- Alfabeto --- */
 const alfabetos = {
-  A: "ಅ", B: "𐌁", C: "চ", D: "Д", E: "え", F: "ᕓ",
-  G: "ಗ", H: "𐌇", I: "ই", J: "Ж", K: "き", L: "ᒪ",
-  M: "ಮ", N: "𐌍", O: "ও", P: "П", Q: "ಕ್ವ", R: "ᕒ",
-  S: "ಸ", T: "𐌕", U: "উ", V: "В", W: "ゔぃ", X: "ᐊᔅ",
-  Y: "ಯ", Z: "𐌆"
+  A:"ಅ",B:"𐌁",C:"চ",D:"Д",E:"え",F:"ᕓ",G:"ಗ",H:"𐌇",I:"ই",J:"Ж",
+  K:"き",L:"ᒪ",M:"ಮ",N:"𐌍",O:"ও",P:"П",Q:"ಕ್ವ",R:"ᕒ",S:"ಸ",T:"𐌕",
+  U:"উ",V:"В",W:"ゔぃ",X:"ᐊᔅ",Y:"ಯ",Z:"𐌆"
 };
-
-/* --- Mapa invertido para decodificação --- */
 const mapaInvertido = {};
-for(const letra in alfabetos){
-  mapaInvertido[alfabetos[letra]] = letra;
-}
+for(const l in alfabetos){ mapaInvertido[alfabetos[l]] = l; }
 
-/* --- Codificar / Decodificar --- */
 function codificar(){
-  const texto = document.getElementById("inputEncode").value.toUpperCase();
-  let resultado = "";
-  for(const ch of texto){
-    resultado += alfabetos[ch] || ch;
-  }
-  document.getElementById("saida").textContent = resultado;
+  const t = document.getElementById("inputEncode").value.toUpperCase();
+  let r = "";
+  for(const c of t){ r += alfabetos[c] || c; }
+  document.getElementById("saida").textContent = r;
 }
-
 function decodificar(){
-  const texto = document.getElementById("inputDecode").value;
-  let resultado = "", i = 0;
-  while(i < texto.length){
-    let encontrado = false;
-    for(let len = 3; len > 0; len--){
-      const trecho = texto.slice(i,i+len);
-      if(mapaInvertido[trecho]){
-        resultado += mapaInvertido[trecho];
-        i += len;
-        encontrado = true;
+  const t = document.getElementById("inputDecode").value;
+  let r = "", i = 0;
+  while(i < t.length){
+    let e = false;
+    for(let l = 3; l > 0; l--){
+      const s = t.slice(i,i+l);
+      if(mapaInvertido[s]){
+        r += mapaInvertido[s];
+        i += l;
+        e = true;
         break;
       }
     }
-    if(!encontrado){ resultado += texto[i]; i++; }
+    if(!e){ r += t[i]; i++; }
   }
-  document.getElementById("saida").textContent = resultado;
+  document.getElementById("saida").textContent = r;
 }
 
 /* --- Tabs --- */
-const tabEncode=document.getElementById("tabEncode");
-const tabDecode=document.getElementById("tabDecode");
-const encodeSec=document.getElementById("encodeSection");
-const decodeSec=document.getElementById("decodeSection");
+const tabE=document.getElementById("tabEncode");
+const tabD=document.getElementById("tabDecode");
+const secE=document.getElementById("encodeSection");
+const secD=document.getElementById("decodeSection");
 
-tabEncode.addEventListener("click",()=>{
-  tabEncode.classList.add("active");
-  tabDecode.classList.remove("active");
-  encodeSec.style.display="block";
-  decodeSec.style.display="none";
-  document.getElementById("saida").textContent="(output appears here)";
-});
-tabDecode.addEventListener("click",()=>{
-  tabDecode.classList.add("active");
-  tabEncode.classList.remove("active");
-  decodeSec.style.display="block";
-  encodeSec.style.display="none";
-  document.getElementById("saida").textContent="(output appears here)";
-});
+tabE.onclick=()=>{ 
+  tabE.classList.add("active");
+  tabD.classList.remove("active");
+  secE.style.display="block";
+  secD.style.display="none";
+  document.getElementById("saida").textContent="(a saída aparece aqui)";
+};
+tabD.onclick=()=>{ 
+  tabD.classList.add("active");
+  tabE.classList.remove("active");
+  secD.style.display="block";
+  secE.style.display="none";
+  document.getElementById("saida").textContent="(a saída aparece aqui)";
+};
 </script>
 </body>
 </html>
