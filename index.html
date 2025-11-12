@@ -27,7 +27,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   background: url('kangback.jpg') no-repeat center center fixed;
   background-size: cover;
   font-family: 'DoctorGlitch', sans-serif;
@@ -38,28 +37,34 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Blur de fundo corrigido */
+/* Blur corrigido */
 body::before {
   content: "";
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  inset: 0;
   background: inherit;
   background-attachment: fixed;
   filter: blur(20px) brightness(0.4);
   z-index: -1;
 }
 
-/* === Cartão === */
+/* === Cartão com proporção 3:4 === */
 .container {
+  aspect-ratio: 3 / 4;
+  width: 90%;
+  max-width: 850px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 35px;
-  padding: 5rem 4rem;
-  width: 95%;
-  max-width: 850px;
-  min-height: 92vh;
+  padding: 4rem 3.5rem;
   text-align: center;
   box-shadow: 0 0 60px rgba(255, 0, 0, 0.15);
   animation: fadeIn 1.2s ease forwards;
@@ -67,29 +72,28 @@ body::before {
   transition: all 0.4s ease;
 }
 
-/* Fade com leve zoom */
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.97) translateY(25px); }
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* === Responsividade === */
+/* Responsivo */
 @media (max-width: 768px) {
   .container {
-    padding: 3.5rem 2.2rem;
     width: 92%;
-    min-height: 90vh;
+    max-height: 88vh;
+    padding: 3rem 2rem;
+    border-radius: 28px;
   }
   h2 {
     font-size: 2rem;
   }
 }
-
 @media (max-width: 480px) {
   .container {
-    padding: 3rem 1.5rem;
     width: 90%;
-    min-height: 88vh;
+    aspect-ratio: unset;
+    min-height: 85vh;
   }
   h2 {
     font-size: 1.8rem;
@@ -224,7 +228,6 @@ button:hover {
   </div>
 
 <script>
-/* --- Dicionário --- */
 const alfabetos = {
   A:"ಅ",B:"𐌁",C:"চ",D:"Д",E:"え",F:"ᕓ",G:"ಗ",H:"𐌇",I:"ই",J:"Ж",
   K:"き",L:"ᒪ",M:"ಮ",N:"𐌍",O:"ও",P:"П",Q:"ಕ್ವ",R:"ᕒ",S:"ಸ",T:"𐌕",
@@ -233,7 +236,6 @@ const alfabetos = {
 const mapaInvertido = {};
 for(const l in alfabetos){ mapaInvertido[alfabetos[l]] = l; }
 
-/* --- Codificar / Decodificar --- */
 function codificar(){
   const t = document.getElementById("inputEncode").value.toUpperCase();
   let r = "";
@@ -259,7 +261,6 @@ function decodificar(){
   document.getElementById("saida").textContent = r;
 }
 
-/* --- Tabs + Fade --- */
 const tabE=document.getElementById("tabEncode");
 const tabD=document.getElementById("tabDecode");
 const secE=document.getElementById("encodeSection");
@@ -272,7 +273,6 @@ tabE.onclick=()=>{
   setTimeout(()=>secE.classList.add("active"),50);
   document.getElementById("saida").textContent="(output appears here)";
 };
-
 tabD.onclick=()=>{ 
   tabD.classList.add("active");
   tabE.classList.remove("active");
