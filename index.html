@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>🩸Vaelarian - Encode 
-or Decode</title>
+<title>🩸Vaelarian - Encode or Decode</title>
 <link rel="icon" type="image/png" href="decoder.encoder.png">
 <style>
 @font-face {
@@ -21,7 +20,7 @@ body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center; /* centraliza verticalmente */
+  justify-content:center;
   min-height:100vh;
   filter: blur(8px);
   opacity: 0;
@@ -35,13 +34,13 @@ body{
   }
 }
 
-/* --- Título e pequenos ajustes --- */
+/* --- Título --- */
 h2{
   font-size:3rem;
   margin-bottom:2rem;
   color:#e63946;
   text-align:center;
-  margin-top:-3rem; /* puxa título um pouco pra cima */
+  margin-top:-3rem;
 }
 
 /* --- Abas --- */
@@ -105,8 +104,7 @@ button:hover{
 </style>
 </head>
 <body>
-<h2>🩸Vaelarian - Encode 
-or Decode</h2>
+<h2>🩸Vaelarian - Encode or Decode</h2>
 
 <div class="tabs">
   <div class="tab active" id="tabEncode">Encode</div>
@@ -126,47 +124,48 @@ or Decode</h2>
 <div id="saida">(output appears here)</div>
 
 <script>
-/* --- Alfabetos e mapeamento --- */
+/* --- Alfabeto único --- */
 const alfabetos = {
-  A:["অ","𐌀","ಅ","А","あ","ᐊ"], B:["ব","𐌁","ಬ","Б","び","ᐯ"], C:["চ","𐌂","ಚ","Ц","ち","ᒐ"],
-  D:["দ","𐌃","ದ","Д","だ","ᑕ"], E:["এ","𐌄","ಎ","Е","え","ᐁ"], F:["ফ","𐌅","ಫ","Ф","ふ","ᕓ"],
-  G:["গ","𐌆","ಗ","Г","が","ᑲ"], H:["হ","𐌇","ಹ","Х","ひ","ᕼ"], I:["ই","𐌉","ಇ","И","い","ᐃ"],
-  J:["জ","𐌈","ಜ","Ж","じ","ᔕ"], K:["ক","𐌊","ಕ","К","き","ᑭ"], L:["ল","𐌋","ಲ","Л","ら","ᒪ"],
-  M:["ম","𐌌","ಮ","М","ま","ᒣ"], N:["ন","𐌍","ನ","Н","な","ᓇ"], O:["ও","𐌏","ಒ","О","お","ᐅ"],
-  P:["প","𐍀","ಪ","П","ぱ","ᐸ"], Q:["কু","𐌒","ಕ್ವ","КУ","く","ᖃ"], R:["র","𐌓","ರ","Р","ら","ᕒ"],
-  S:["স","𐌔","ಸ","С","さ","ᔅ"], T:["ত","𐌕","ತ","Т","た","ᑎ"], U:["উ","𐌖","ಉ","У","う","ᐆ"],
-  V:["ভ","𐌗","ವ","В","ゔ","ᐧ"], W:["উই","𐌞","ವ್","ВВ","ゔぃ","ᐧᐤ"], X:["ক্ষ","𐌗","ಕ್ಸ","КС","くす","ᐊᔅ"],
-  Y:["য","𐌘","ಯ","Й","や","ᔦ"], Z:["জ়","𐌆","ಜ್","З","ず","ᔓ"]
+  A: "ಅ", B: "𐌁", C: "চ", D: "Д", E: "え", F: "ᕓ",
+  G: "ಗ", H: "𐌇", I: "ই", J: "Ж", K: "き", L: "ᒪ",
+  M: "ಮ", N: "𐌍", O: "ও", P: "П", Q: "ಕ್ವ", R: "ᕒ",
+  S: "ಸ", T: "𐌕", U: "উ", V: "В", W: "ゔぃ", X: "ᐊᔅ",
+  Y: "ಯ", Z: "𐌆"
 };
 
+/* --- Mapa invertido para decodificação --- */
 const mapaInvertido = {};
-for(const letra in alfabetos){ alfabetos[letra].forEach(s=>mapaInvertido[s]=letra); }
+for(const letra in alfabetos){
+  mapaInvertido[alfabetos[letra]] = letra;
+}
 
-/* --- Funções Encode / Decode --- */
+/* --- Funções --- */
 function codificar(){
-  const texto=document.getElementById("inputEncode").value.toUpperCase();
-  let resultado="";
+  const texto = document.getElementById("inputEncode").value.toUpperCase();
+  let resultado = "";
   for(const ch of texto){
-    if(alfabetos[ch]){
-      const sim=alfabetos[ch];
-      resultado+=sim[Math.floor(Math.random()*sim.length)];
-    } else resultado+=ch;
+    resultado += alfabetos[ch] || ch;
   }
-  document.getElementById("saida").textContent=resultado;
+  document.getElementById("saida").textContent = resultado;
 }
 
 function decodificar(){
-  const texto=document.getElementById("inputDecode").value;
-  let resultado=""; let i=0;
-  while(i<texto.length){
-    let encontrado=false;
-    for(let len=3; len>0; len--){
-      const trecho=texto.slice(i,i+len);
-      if(mapaInvertido[trecho]){ resultado+=mapaInvertido[trecho]; i+=len; encontrado=true; break; }
+  const texto = document.getElementById("inputDecode").value;
+  let resultado = "", i = 0;
+  while(i < texto.length){
+    let encontrado = false;
+    for(let len = 3; len > 0; len--){
+      const trecho = texto.slice(i, i+len);
+      if(mapaInvertido[trecho]){
+        resultado += mapaInvertido[trecho];
+        i += len;
+        encontrado = true;
+        break;
+      }
     }
-    if(!encontrado){ resultado+=texto[i]; i++; }
+    if(!encontrado){ resultado += texto[i]; i++; }
   }
-  document.getElementById("saida").textContent=resultado;
+  document.getElementById("saida").textContent = resultado;
 }
 
 /* --- Tabs --- */
