@@ -198,12 +198,12 @@ button:hover{
     </div>
 
     <div id="encodeSection" class="fade-section active">
-      <textarea id="inputEncode" placeholder="Type your text to encode..."></textarea>
+      <textarea id="inputEncode" placeholder="Escreva seu texto para codificar..."></textarea>
       <button onclick="codificar()">Codificar</button>
     </div>
 
     <div id="decodeSection" class="fade-section">
-      <textarea id="inputDecode" placeholder="Paste your encoded text..."></textarea>
+      <textarea id="inputDecode" placeholder="Cole o texto aqui..."></textarea>
       <button onclick="decodificar()">Decodificar</button>
     </div>
 
@@ -254,14 +254,14 @@ tabE.onclick=()=>{
   tabD.classList.remove("active");
   secD.classList.remove("active");
   secE.classList.add("active");
-  document.getElementById("saida").textContent="(output appears here)";
+  document.getElementById("saida").textContent="(o texto colado decodificado aparece aqui.)";
 };
 tabD.onclick=()=>{
   tabD.classList.add("active");
   tabE.classList.remove("active");
   secE.classList.remove("active");
   secD.classList.add("active");
-  document.getElementById("saida").textContent="(output appears here)";
+  document.getElementById("saida").textContent="(o texto colado decodificado aparece aqui.)";
 };
 </script>
 </body>
